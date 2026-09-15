@@ -29,6 +29,22 @@ jobs:
             
             echo "📁 Target directory: $DEPLOY_PATH"
             
+            # 0. Fix Network: Prioritaskan IPv4 jika VPS tidak memiliki route IPv6
+            echo "🌐 Configuring network to prioritize IPv4 for Docker Hub..."
+            if [ -f /etc/gai.conf ]; then
+              sed -i 's/#precedence ::ffff:0:0\/96  100/precedence ::ffff:0:0\/96  100/' /etc/gai.conf 2>/dev/null || true
+              grep -q "precedence ::ffff:0:0/96 100" /etc/gai.conf 2>/dev/null || echo "precedence ::ffff:0:0/96 100" >> /etc/gai.conf 2>/dev/null || true
+            else
+              echo "precedence ::ffff:0:0/96 100" > /etc/gai.conf 2>/dev/null || true
+            fi
+            
+            # Pastikan DNS Docker daemon memakai IPv4 (Google / Cloudflare DNS)
+            if [ ! -f /etc/docker/daemon.json ]; then
+              mkdir -p /etc/docker
+              echo '{"dns": ["8.8.8.8", "1.1.1.1"]}' > /etc/docker/daemon.json 2>/dev/null || true
+              systemctl restart docker 2>/dev/null || service docker restart 2>/dev/null || true
+            fi
+
             # 1. Pastikan direktori ada & set safe directory Git untuk aaPanel
             mkdir -p "$DEPLOY_PATH"
             git config --global --add safe.directory "$DEPLOY_PATH" || true
