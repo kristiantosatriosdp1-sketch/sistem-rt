@@ -1,0 +1,197 @@
+erDiagram
+    WARGA ||--o{ PENGHUNI : "menempati"
+    RUMAH ||--o{ PENGHUNI : "dihuni_oleh"
+    WARGA ||--o| USERS : "punya_akun"
+
+    WARGA ||--o{ ANGGOTA_ORGANISASI : "ikut_sebagai"
+    RUMAH ||--o{ ANGGOTA_ORGANISASI : "ikut_sebagai"
+    ORGANISASI ||--o{ ANGGOTA_ORGANISASI : "punya_anggota"
+
+    ORGANISASI ||--o{ KATEGORI_KAS : "punya_kategori"
+    KATEGORI_KAS ||--o{ TRANSAKSI_KAS : "dicatat_di"
+    WARGA ||--o{ TRANSAKSI_KAS : "membayar/menerima"
+    RUMAH ||--o{ TRANSAKSI_KAS : "membayar/menerima"
+    USERS ||--o{ TRANSAKSI_KAS : "mencatat"
+
+    ORGANISASI ||--o{ ASET : "memiliki"
+    ORGANISASI ||--o{ AGENDA : "menyelenggarakan"
+    ORGANISASI ||--o{ PENGUMUMAN : "menerbitkan"
+
+    RUMAH ||--o{ USAHA_WARGA : "memiliki"
+    RUMAH ||--o{ HEWAN_PELIHARAAN : "memiliki"
+
+    USERS ||--o{ PUSH_SUBSCRIPTION : "mendaftar"
+    USERS ||--o{ NOTIFIKASI : "menerima"
+
+    WARGA {
+        uuid id PK
+        string nik UK
+        string no_kk
+        string nama_lengkap
+        string nama_panggilan
+        enum jenis_kelamin
+        date tanggal_lahir
+        string pekerjaan
+        text alamat_ktp
+        string no_hp
+        enum status_pernikahan
+        timestamp created_at
+    }
+
+    RUMAH {
+        uuid id PK
+        text alamat
+        enum kepemilikan "milik,sewa,kos,lainnya"
+        timestamp created_at
+    }
+
+    PENGHUNI {
+        uuid id PK
+        uuid warga_id FK
+        uuid rumah_id FK
+        date tanggal_mulai_menempati
+        enum status "aktif,pindah,kerja_luar_kota,meninggal"
+        date tanggal_status_berubah
+        text keterangan
+    }
+
+    USERS {
+        uuid id PK
+        uuid warga_id FK
+        string username UK
+        string password_hash
+        enum role "admin_rt,pengurus,warga"
+        timestamp created_at
+    }
+
+    ORGANISASI {
+        uuid id PK
+        string nama
+        enum tipe "rt,dawis,koperasi,pemuda,remaja,keagamaan,lainnya"
+        enum tipe_keanggotaan "per_orang,per_rumah"
+        enum jenis "bisnis,sosial"
+        text deskripsi
+    }
+
+    ANGGOTA_ORGANISASI {
+        uuid id PK
+        uuid organisasi_id FK
+        uuid warga_id FK "nullable"
+        uuid rumah_id FK "nullable"
+        string jabatan
+        date tanggal_bergabung
+        enum status "aktif,nonaktif"
+    }
+
+    KATEGORI_KAS {
+        uuid id PK
+        uuid organisasi_id FK "nullable = kas umum RT"
+        string nama
+        enum tipe "wajib_bulanan,jimpitan,kas_organisasi,sosial,sampah,keamanan,lainnya"
+    }
+
+    TRANSAKSI_KAS {
+        uuid id PK
+        uuid kategori_kas_id FK
+        uuid warga_id FK "nullable"
+        uuid rumah_id FK "nullable"
+        enum jenis "masuk,keluar"
+        decimal jumlah
+        date tanggal
+        text keterangan
+        string bukti_url
+        uuid dicatat_oleh FK
+        timestamp created_at
+    }
+
+    ASET {
+        uuid id PK
+        uuid organisasi_id FK
+        string nama
+        text deskripsi
+        decimal nilai
+        string kondisi
+        string foto_url
+    }
+
+    AGENDA {
+        uuid id PK
+        uuid organisasi_id FK
+        string judul
+        text deskripsi
+        timestamp tanggal_mulai
+        timestamp tanggal_selesai
+        string lokasi
+    }
+
+    BERITA {
+        uuid id PK
+        enum tingkat "rw,kelurahan,kecamatan,kota,provinsi,nasional"
+        string judul
+        text isi
+        string sumber_url
+        date tanggal
+    }
+
+    PENGUMUMAN {
+        uuid id PK
+        uuid organisasi_id FK "nullable = untuk semua"
+        string judul
+        text isi
+        date tanggal_mulai
+        date tanggal_berakhir
+    }
+
+    USAHA_WARGA {
+        uuid id PK
+        uuid rumah_id FK
+        string nama_usaha
+        string kategori
+        text deskripsi
+        string kontak
+        string foto_url
+    }
+
+    HEWAN_PELIHARAAN {
+        uuid id PK
+        uuid rumah_id FK
+        string nama
+        string jenis
+        text keterangan
+    }
+
+    KONTAK_DARURAT {
+        uuid id PK
+        string nama
+        enum kategori "ambulan,damkar,polisi,lainnya"
+        string nomor
+        text keterangan
+    }
+
+    SOP {
+        uuid id PK
+        string judul
+        string kategori
+        text konten
+        int urutan
+    }
+
+    NOTIFIKASI {
+        uuid id PK
+        uuid target_user_id FK "nullable = broadcast"
+        uuid target_organisasi_id FK "nullable"
+        string judul
+        text isi
+        string tipe
+        boolean dibaca
+        timestamp dikirim_at
+    }
+
+    PUSH_SUBSCRIPTION {
+        uuid id PK
+        uuid user_id FK
+        text endpoint
+        string keys_p256dh
+        string keys_auth
+        timestamp created_at
+    }
