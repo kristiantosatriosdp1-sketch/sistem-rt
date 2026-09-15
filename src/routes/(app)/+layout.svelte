@@ -7,7 +7,7 @@
 		{ href: '/', label: 'Beranda', icon: '🏠' },
 		{ href: '/warga', label: 'Warga', icon: '👥' },
 		{ href: '/kas', label: 'Kas', icon: '💰' },
-		{ href: '/info', label: 'Info', icon: '📋' }
+		{ href: '/informasi', label: 'Info', icon: '📋' }
 	];
 </script>
 
