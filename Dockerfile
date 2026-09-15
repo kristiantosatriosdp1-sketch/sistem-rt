@@ -21,18 +21,16 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST=0.0.0.0
 
-# Install production dependencies only + tsx and drizzle-kit for migrations
+# Install production dependencies only
 COPY package*.json ./
-RUN npm ci --omit=dev && npm install tsx drizzle-kit dotenv
+RUN npm ci --omit=dev
 
-# Copy build artifacts and migrations from builder
+# Copy build artifacts, migrations, and scripts
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/drizzle ./drizzle
-COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
-COPY --from=builder /app/src/lib/server/db/schema.ts ./src/lib/server/db/schema.ts
 COPY --from=builder /app/scripts ./scripts
 
 EXPOSE 3000
 
 # Start script: run migrations then start Node server
-CMD ["sh", "-c", "npx drizzle-kit migrate && node build"]
+CMD ["sh", "-c", "node scripts/migrate.js && node build"]
