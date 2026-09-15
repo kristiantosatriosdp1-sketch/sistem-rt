@@ -21,40 +21,46 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
+          timeout: 60s
+          command_timeout: 30m
           script: |
             set -e
             DEPLOY_PATH="/www/wwwroot/catatan_rt"
             
             echo "📁 Target directory: $DEPLOY_PATH"
             
-            # 1. Fix safe directory permission untuk Git di aaPanel
+            # 1. Pastikan direktori ada & set safe directory Git untuk aaPanel
+            mkdir -p "$DEPLOY_PATH"
             git config --global --add safe.directory "$DEPLOY_PATH" || true
+            cd "$DEPLOY_PATH"
             
-            # 2. Clone jika folder belum ada, atau pull jika sudah ada
-            if [ ! -d "$DEPLOY_PATH/.git" ]; then
-              echo "✨ Cloning repository..."
-              mkdir -p "$DEPLOY_PATH"
-              git clone https://github.com/MegonoComunity/sistem-rt.git "$DEPLOY_PATH"
-              cd "$DEPLOY_PATH"
+            # 2. Inisialisasi Git & sync kode terbaru (Aman meskipun folder aaPanel berisi file default)
+            if [ ! -d ".git" ]; then
+              echo "✨ Initializing Git repository..."
+              git init
+              git remote add origin https://github.com/MegonoComunity/sistem-rt.git || git remote set-url origin https://github.com/MegonoComunity/sistem-rt.git
+              git fetch origin main
+              git reset --hard origin/main
+              git branch --set-upstream-to=origin/main main || true
             else
-              echo "🔄 Updating codebase with latest changes..."
-              cd "$DEPLOY_PATH"
-              git reset --hard
-              git pull origin main
+              echo "🔄 Updating codebase from main branch..."
+              git remote set-url origin https://github.com/MegonoComunity/sistem-rt.git || true
+              git fetch origin main
+              git reset --hard origin/main
             fi
 
-            # 3. Pastikan file .env tersedia (jika belum ada, salin dari .env.example)
+            # 3. Siapkan file .env jika belum ada
             if [ ! -f ".env" ]; then
               echo "⚙️ Creating default .env from .env.example..."
               cp .env.example .env
             fi
 
-            # 4. Build & Jalankan Docker Container (Database aman di volume terpisah)
-            echo "🐳 Building & restarting Docker containers..."
+            # 4. Build & Jalankan Docker Container
+            echo "🐳 Building and starting Docker containers..."
             docker compose down --remove-orphans || true
             docker compose up -d --build --remove-orphans
 
-            # 5. Bersihkan Docker image yang tidak terpakai
+            # 5. Bersihkan Docker image lama yang tidak terpakai
             echo "🧹 Cleaning up unused Docker images..."
             docker image prune -f
 
