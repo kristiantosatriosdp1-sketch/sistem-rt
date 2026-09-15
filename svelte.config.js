@@ -6,6 +6,9 @@ const config = {
 	preprocess: vitePreprocess(),
 	kit: {
 		adapter: adapter(),
+		csrf: {
+			checkOrigin: false
+		},
 		serviceWorker: {
 			// register manual di +layout.svelte supaya bisa kontrol kapan register
 			register: false
