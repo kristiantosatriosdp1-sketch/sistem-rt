@@ -1,0 +1,52 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: sistem_rt_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-rt_secret_password_123}
+      POSTGRES_DB: ${DB_NAME:-sistem_rt}
+    volumes:
+      # Data database disimpan secara terpisah di volume Docker permanen (aman dari update/reset)
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-sistem_rt}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - rt_network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sistem_rt_app
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOST: 0.0.0.0
+      DATABASE_URL: postgresql://${DB_USER:-postgres}:${DB_PASSWORD:-rt_secret_password_123}@postgres:5432/${DB_NAME:-sistem_rt}
+      VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+      VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+      VAPID_SUBJECT: ${VAPID_SUBJECT:-mailto:admin@sistem-rt.local}
+      ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    networks:
+      - rt_network
+
+volumes:
+  postgres_data:
+    name: sistem_rt_postgres_data
+
+networks:
+  rt_network:
+    name: sistem_rt_network
