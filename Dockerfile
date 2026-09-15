@@ -9,6 +9,7 @@ RUN npm ci
 
 # Copy source code and build
 COPY . .
+ENV DATABASE_URL="postgresql://postgres:postgres@localhost:5432/sistem_rt"
 RUN npm run build
 
 # Stage 2: Production runtime
