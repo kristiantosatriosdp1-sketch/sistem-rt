@@ -39,7 +39,7 @@
 				showFormTambah = !showFormTambah;
 				editingId = null;
 			}}
-			class="rounded-xl bg-white px-3 py-2 text-xs font-semibold text-brand-700 shadow-sm transition active:scale-95"
+			class="rounded-xl bg-white px-3.5 py-2 text-xs font-bold text-brand-800 shadow-md transition hover:bg-brand-50 active:scale-95"
 		>
 			{showFormTambah ? '✕ Tutup' : '+ Catat Hewan'}
 		</button>

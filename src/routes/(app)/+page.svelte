@@ -42,35 +42,35 @@
 	<section class="grid grid-cols-2 gap-3 sm:grid-cols-4">
 		<a
 			href="/warga"
-			class="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-200"
+			class="rounded-2xl border border-gray-200/80 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-300"
 		>
 			<p class="text-2xl">👥</p>
-			<p class="mt-1.5 text-sm font-semibold text-gray-800">Data Warga</p>
-			<p class="text-[11px] text-gray-400">Kependudukan & KK</p>
+			<p class="mt-1.5 text-base font-bold text-gray-900">Data Warga</p>
+			<p class="text-xs text-gray-600">Kependudukan & KK</p>
 		</a>
 		<a
 			href="/rumah"
-			class="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-200"
+			class="rounded-2xl border border-gray-200/80 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-300"
 		>
 			<p class="text-2xl">🏠</p>
-			<p class="mt-1.5 text-sm font-semibold text-gray-800">Rumah & Blok</p>
-			<p class="text-[11px] text-gray-400">Hunian & Penghuni</p>
+			<p class="mt-1.5 text-base font-bold text-gray-900">Rumah & Blok</p>
+			<p class="text-xs text-gray-600">Hunian & Penghuni</p>
 		</a>
 		<a
 			href="/kas"
-			class="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-200"
+			class="rounded-2xl border border-gray-200/80 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-300"
 		>
 			<p class="text-2xl">💰</p>
-			<p class="mt-1.5 text-sm font-semibold text-gray-800">Kas & Iuran</p>
-			<p class="text-[11px] text-gray-400">Jimpitan & Keuangan</p>
+			<p class="mt-1.5 text-base font-bold text-gray-900">Kas & Iuran</p>
+			<p class="text-xs text-gray-600">Jimpitan & Keuangan</p>
 		</a>
 		<a
 			href="/informasi"
-			class="rounded-2xl border border-brand-200 bg-brand-50/50 p-4 shadow-sm transition hover:shadow-md hover:bg-brand-50"
+			class="rounded-2xl border border-brand-200 bg-brand-50/70 p-4 shadow-sm transition hover:shadow-md hover:bg-brand-50"
 		>
 			<p class="text-2xl">📋</p>
-			<p class="mt-1.5 text-sm font-semibold text-brand-800">Pusat Info</p>
-			<p class="text-[11px] text-brand-600">Agenda, SOP, Darurat</p>
+			<p class="mt-1.5 text-base font-bold text-brand-900">Pusat Info</p>
+			<p class="text-xs text-brand-700 font-medium">Agenda, SOP, Darurat</p>
 		</a>
 	</section>
 
