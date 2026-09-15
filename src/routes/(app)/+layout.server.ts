@@ -11,7 +11,8 @@ export const load: LayoutServerLoad = async ({ locals, url }) => {
 		user: {
 			id: locals.user.id,
 			username: locals.user.username,
-			role: locals.user.role
+			role: locals.user.role,
+			wargaId: locals.user.wargaId
 		}
 	};
 };
