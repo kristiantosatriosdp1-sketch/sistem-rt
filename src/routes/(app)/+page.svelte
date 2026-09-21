@@ -574,7 +574,7 @@
 							class="flex items-center justify-between pb-2 mt-5"
 						>
 							<h2 class="font-bold text-gray-900 text-base">
-								BERITA TERBARU
+								BERITA TERKINI
 							</h2>
 
 							<a
