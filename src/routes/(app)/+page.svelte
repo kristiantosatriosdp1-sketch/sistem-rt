@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { formatRupiah } from "$lib/format";
 	import { fade, scale } from "svelte/transition";
-	let selectedAgenda = $state(null);
-	let selectedPengumuman = $state(null);
-	let selectedBerita = $state(null);
+	let selectedAgenda = $state<any>(null);
+	let selectedPengumuman = $state<any>(null);
+	let selectedBerita = $state<any>(null);
 
 	let { data } = $props();
 
@@ -1005,7 +1005,7 @@
 			<div
 				class="flex items-center justify-between bg-gradient-to-r from-emerald-500 to-emerald-600 px-5 py-4 text-white"
 			>
-				<h3 class="text-base font-bold">Detail Berita</h3>
+				<h3 class="text-base font-bold">{selectedBerita.judul}</h3>
 
 				<button
 					type="button"
@@ -1019,14 +1019,6 @@
 
 			<!-- Isi -->
 			<div class="p-5">
-				<!-- Judul -->
-				<h4
-					id="berita-title"
-					class="text-lg font-bold leading-snug text-gray-900"
-				>
-					{selectedBerita.judul}
-				</h4>
-
 				<!-- Isi / Deskripsi Berita -->
 				{#if selectedBerita.deskripsi}
 					<div class="mt-3">
@@ -1110,12 +1102,14 @@
 							</div>
 
 							<div class="min-w-0">
-								<p class="text-[11px] text-gray-400">Tingkat</p>
+								<p class="text-[11px] text-gray-400">
+									Tingkat Berita
+								</p>
 
 								<p
 									class="text-xs font-semibold leading-relaxed text-gray-800"
 								>
-									Berita Tingkat {selectedBerita.tingkat}
+									{selectedBerita.tingkat}
 								</p>
 							</div>
 						</div>
