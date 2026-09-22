@@ -139,73 +139,6 @@
 	<title>Demografi Warga — Sistem RT</title>
 </svelte:head>
 
-<div
-	class="bg-gradient-to-r from-emerald-500 to-emerald-600 px-5 pt-6 pb-5 text-white rounded-b-[0.55rem] shadow-lg shadow-emerald-500/20"
->
-	<div class="flex items-center justify-between">
-		<div class="flex items-center space-x-3">
-			<div class="bg-white/10 p-2 rounded-2xl backdrop-blur-md">
-				<svg
-					class="w-6 h-6 text-white"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-					></path>
-				</svg>
-			</div>
-
-			<h1 class="text-xl font-bold tracking-wide">Kanal Warga</h1>
-		</div>
-
-		<div class="flex items-center space-x-3">
-			<button
-				aria-label="Notifikasi"
-				class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md transition"
-			>
-				<svg
-					class="w-5 h-5 text-white"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-					></path>
-				</svg>
-			</button>
-
-			<a
-				href="/logout"
-				class="w-10 h-10 bg-white/10 hover:bg-red-500/20 rounded-full flex items-center justify-center backdrop-blur-md transition group"
-				title="Keluar"
-			>
-				<svg
-					class="w-5 h-5 text-white group-hover:text-red-200 transition"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-					></path>
-				</svg>
-			</a>
-		</div>
-	</div>
-</div>
-
 <div class="px-4 mt-6">
 	<div class="flex items-center justify-between mb-5">
 		<h1 class="text-lg font-semibold text-gray-900">Demografi Warga</h1>
@@ -400,13 +333,6 @@
 			{/each}
 		</div>
 	</div>
-</div>
-
-<!-- Daftar Warga -->
-<div class="space-y-4 px-4 py-4">
-	<a href="/rumah" class="block text-sm text-brand-600">
-		Lihat data Rumah →
-	</a>
 </div>
 
 <!-- Modal -->

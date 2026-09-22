@@ -66,75 +66,8 @@
 <div class="min-h-screen bg-gray-50 pb-10">
 	<!-- 1. Header Hijau Gradasi -->
 	<div
-		class="bg-gradient-to-r from-emerald-500 to-emerald-600 px-5 pt-6 pb-40 text-white rounded-b-[0.55rem] shadow-lg shadow-emerald-500/20"
-	>
-		<div class="flex items-center justify-between">
-			<!-- Logo & Nama Aplikasi -->
-			<div class="flex items-center space-x-3">
-				<div class="bg-white/10 p-2 rounded-2xl backdrop-blur-md">
-					<svg
-						class="w-6 h-6 text-white"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-						></path>
-					</svg>
-				</div>
-
-				<h1 class="text-xl font-bold tracking-wide">Kanal Warga</h1>
-			</div>
-
-			<!-- Tombol Notifikasi & Logout -->
-			<div class="flex items-center space-x-3">
-				<!-- Tombol Notifikasi -->
-				<!-- svelte-ignore a11y_consider_explicit_label -->
-				<button
-					class="w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center backdrop-blur-md transition"
-				>
-					<svg
-						class="w-5 h-5 text-white"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-						></path>
-					</svg>
-				</button>
-
-				<!-- Tombol Logout -->
-				<a
-					href="/logout"
-					class="w-10 h-10 bg-white/10 hover:bg-red-500/20 rounded-full flex items-center justify-center backdrop-blur-md transition group"
-					title="Keluar"
-				>
-					<svg
-						class="w-5 h-5 text-white group-hover:text-red-200 transition"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-						></path>
-					</svg>
-				</a>
-			</div>
-		</div>
-	</div>
+		class="bg-gradient-to-r from-emerald-500 to-emerald-600 px-5 pt-2 pb-30 text-white shadow-lg shadow-emerald-500/20"
+	></div>
 
 	<!-- 2. Container Utama / Card Profil -->
 	<div class="px-4 -mt-30">
@@ -165,8 +98,11 @@
 				<!-- Detail Info Warga -->
 				<div>
 					<h2 class="font-bold text-gray-800 text-base">
-						Antok Kingdom
+						{data.user.username}
 					</h2>
+					<p class="text-xs text-gray-500 font-medium">
+						{data.user.role}
+					</p>
 
 					<p class="text-xs text-gray-500 font-medium">
 						RT 04 / RW 09
@@ -192,6 +128,135 @@
 
 	<div class="px-4 mt-15 mb-8">
 		<div class="grid grid-cols-5 gap-x-3 gap-y-5 text-center">
+			<!-- Marketplace -->
+			<!-- <a href="/informasi/usaha" class="flex flex-col items-center group">
+				<div
+					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
+				>
+					<svg
+						class="w-6 h-6 text-emerald-600"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.8"
+							d="M3 9h18M5 9l1-5h12l1 5M5 9v10a2 2 0 002 2h10a2 2 0 002-2V9M9 13h6"
+						/>
+					</svg>
+				</div>
+				<span
+					class="text-[11px] font-medium text-gray-700 leading-tight"
+				>
+					Marketplace
+				</span>
+			</a> -->
+
+			<!-- Organisasi -->
+			<a href="/organisasi" class="flex flex-col items-center group">
+				<div
+					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
+				>
+					<svg
+						class="w-6 h-6 text-emerald-600"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.8"
+							d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 21v-2a4 4 0 00-4-4h-1M16 3.13a4 4 0 010 7.75"
+						/>
+					</svg>
+				</div>
+				<span
+					class="text-[11px] font-medium text-gray-700 leading-tight"
+				>
+					Organisasi
+				</span>
+			</a>
+
+			<!-- SOP -->
+			<a href="/informasi/sop" class="flex flex-col items-center group">
+				<div
+					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
+				>
+					<svg
+						class="w-6 h-6 text-emerald-600"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.8"
+							d="M7 3h8l4 4v14H7a2 2 0 01-2-2V5a2 2 0 012-2zM15 3v5h5M9 13h6M9 17h6"
+						/>
+					</svg>
+				</div>
+				<span
+					class="text-[11px] font-medium text-gray-700 leading-tight"
+				>
+					Tata Tertib
+				</span>
+			</a>
+
+			<!-- Aset Warga -->
+			<a href="/informasi/aset" class="flex flex-col items-center group">
+				<div
+					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
+				>
+					<svg
+						class="w-6 h-6 text-emerald-600"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.8"
+							d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2m-8 0h10a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Zm-4 5h18m-9 0v2"
+						/>
+					</svg>
+				</div>
+				<span
+					class="text-[11px] font-medium text-gray-700 leading-tight"
+				>
+					Inventaris
+				</span>
+			</a>
+			<!--Rumah Warga -->
+			<a href="/rumah" class="flex flex-col items-center group">
+				<div
+					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
+				>
+					<svg
+						class="w-6 h-6 text-emerald-600"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.8"
+							d="M4 20h16M6 20V9l6-5 6 5v11M9 20v-6h6v6M9 10h.01M12 10h.01M15 10h.01"
+						/>
+					</svg>
+				</div>
+				<span
+					class="text-[11px] font-medium text-gray-700 leading-tight"
+				>
+					Hunian
+				</span>
+			</a>
+
 			<!-- 8. Nomor Darurat -->
 			<a
 				href="/informasi/kontak"
@@ -218,110 +283,6 @@
 					class="text-[11px] font-medium text-gray-700 leading-tight"
 				>
 					Nomor Darurat
-				</span>
-			</a>
-
-			<!-- 7. Marketplace -->
-			<a href="/informasi/usaha" class="flex flex-col items-center group">
-				<div
-					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
-				>
-					<svg
-						class="w-6 h-6 text-emerald-600"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.8"
-							d="M3 9h18M5 9l1-5h12l1 5M5 9v10a2 2 0 002 2h10a2 2 0 002-2V9M9 13h6"
-						/>
-					</svg>
-				</div>
-				<span
-					class="text-[11px] font-medium text-gray-700 leading-tight"
-				>
-					Marketplace
-				</span>
-			</a>
-
-			<!-- 4. Organisasi -->
-			<a href="/organisasi" class="flex flex-col items-center group">
-				<div
-					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
-				>
-					<svg
-						class="w-6 h-6 text-emerald-600"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.8"
-							d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM22 21v-2a4 4 0 00-4-4h-1M16 3.13a4 4 0 010 7.75"
-						/>
-					</svg>
-				</div>
-				<span
-					class="text-[11px] font-medium text-gray-700 leading-tight"
-				>
-					Organisasi
-				</span>
-			</a>
-
-			<!-- 6. SOP -->
-			<a href="/informasi/sop" class="flex flex-col items-center group">
-				<div
-					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
-				>
-					<svg
-						class="w-6 h-6 text-emerald-600"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.8"
-							d="M7 3h8l4 4v14H7a2 2 0 01-2-2V5a2 2 0 012-2zM15 3v5h5M9 13h6M9 17h6"
-						/>
-					</svg>
-				</div>
-				<span
-					class="text-[11px] font-medium text-gray-700 leading-tight"
-				>
-					Tata Tertib
-				</span>
-			</a>
-
-			<!--Aset Warga -->
-			<a href="/informasi/aset" class="flex flex-col items-center group">
-				<div
-					class="w-14 h-14 bg-emerald-50 group-hover:bg-emerald-100 rounded-full flex items-center justify-center mb-2 transition shadow-sm border border-emerald-100/50"
-				>
-					<svg
-						class="w-6 h-6 text-emerald-600"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.8"
-							d="M4 20h16M6 20V9l6-5 6 5v11M9 20v-6h6v6M9 10h.01M12 10h.01M15 10h.01"
-						/>
-					</svg>
-				</div>
-				<span
-					class="text-[11px] font-medium text-gray-700 leading-tight"
-				>
-					Inventaris
 				</span>
 			</a>
 		</div>
