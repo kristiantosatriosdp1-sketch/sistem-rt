@@ -12,7 +12,10 @@ export const load: PageServerLoad = async ({ url }) => {
 			alamat: rumah.alamat,
 			blokRt: rumah.blokRt,
 			kepemilikan: rumah.kepemilikan,
-			jumlahPenghuniAktif: sql<number>`count(${penghuni.id}) filter (where ${penghuni.status} = 'aktif')`
+			jumlahPenghuniAktif: sql<number>`
+				count(${penghuni.id})
+				filter (where ${penghuni.status} = 'aktif')
+			`
 		})
 		.from(rumah)
 		.leftJoin(penghuni, eq(penghuni.rumahId, rumah.id))
@@ -25,7 +28,35 @@ export const load: PageServerLoad = async ({ url }) => {
 		query = query.where(ilike(rumah.alamat, `%${q}%`));
 	}
 
-	const daftarRumah = await query;
+	const [daftarRumah, statistikRumah] = await Promise.all([
+		query,
 
-	return { daftarRumah, q };
+		db
+			.select({
+				total: sql<number>`count(distinct ${rumah.id})`,
+				dihuni: sql<number>`
+					count(distinct ${rumah.id})
+					filter (
+						where ${penghuni.id} is not null
+						and ${penghuni.status} = 'aktif'
+					)
+				`
+			})
+			.from(rumah)
+			.leftJoin(penghuni, eq(penghuni.rumahId, rumah.id))
+	]);
+
+	const totalRumah = Number(statistikRumah[0]?.total ?? 0);
+	const rumahDihuni = Number(statistikRumah[0]?.dihuni ?? 0);
+	const rumahKosong = totalRumah - rumahDihuni;
+
+	return {
+		daftarRumah,
+		q,
+		statistikRumah: {
+			total: totalRumah,
+			dihuni: rumahDihuni,
+			kosong: rumahKosong
+		}
+	};
 };
