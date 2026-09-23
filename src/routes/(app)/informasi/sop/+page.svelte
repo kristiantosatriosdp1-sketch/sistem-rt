@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
+	import { enhance } from "$app/forms";
 
 	let { data, form } = $props();
 
 	let showFormTambah = $state(false);
 	let editingId = $state<string | null>(null);
-	let search = $state('');
+	let search = $state("");
 	let expandedId = $state<string | null>(null);
 	let loadingAction = $state<string | null>(null);
 
@@ -18,7 +18,7 @@
 				(s.kategori && s.kategori.toLowerCase().includes(q)) ||
 				s.konten.toLowerCase().includes(q)
 			);
-		})
+		}),
 	);
 </script>
 
@@ -26,39 +26,44 @@
 	<title>SOP & Tata Tertib RT - Sistem RT</title>
 </svelte:head>
 
-<header class="bg-brand-600 px-4 pt-6 pb-8 text-white">
-	<div class="flex items-center justify-between">
+<header class="px-4 mt-6">
+	<div class="flex items-center justify-between mb-5">
 		<div>
-			<a href="/informasi" class="inline-flex items-center text-xs text-brand-100 hover:text-white">
-				← Kembali ke Pusat Info
-			</a>
-			<h1 class="mt-1 text-xl font-semibold">📜 SOP & Tata Tertib RT</h1>
+			<h1 class="text-lg font-semibold text-gray-900">
+				SOP & Tata Tertib
+			</h1>
 		</div>
-		<button
-			onclick={() => {
-				showFormTambah = !showFormTambah;
-				editingId = null;
-			}}
-			class="rounded-xl bg-white px-3.5 py-2 text-xs font-bold text-brand-800 shadow-md transition hover:bg-brand-50 active:scale-95"
-		>
-			{showFormTambah ? '✕ Tutup' : '+ Tambah Dokumen'}
-		</button>
+		{#if data.user.role === "admin_rt"}
+			<button
+				onclick={() => {
+					showFormTambah = !showFormTambah;
+					editingId = null;
+				}}
+				class="rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white"
+			>
+				{showFormTambah ? "✕ Tutup" : "+ Tata Tertib Baru"}
+			</button>
+		{/if}
 	</div>
 </header>
 
-<main class="-mt-4 space-y-4 px-4">
+<main class="mt-10 space-y-4 px-4">
 	<!-- Form Tambah SOP -->
 	{#if showFormTambah}
-		<section class="rounded-2xl bg-white p-4 shadow-sm border border-brand-100">
-			<h2 class="text-sm font-semibold text-gray-900 mb-3">Buat Panduan / SOP / Tata Tertib Baru</h2>
+		<section
+			class="rounded-2xl bg-white p-4 shadow-sm border border-brand-100"
+		>
+			<h2 class="text-sm font-semibold text-gray-900 mb-3">
+				Buat Panduan / SOP / Tata Tertib Baru
+			</h2>
 			<form
 				method="POST"
 				action="?/tambah"
 				use:enhance={() => {
-					loadingAction = 'tambah';
+					loadingAction = "tambah";
 					return async ({ result, update }) => {
 						loadingAction = null;
-						if (result.type === 'success') {
+						if (result.type === "success") {
 							showFormTambah = false;
 						}
 						await update();
@@ -68,7 +73,11 @@
 			>
 				<div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
 					<div class="sm:col-span-2">
-						<label for="sop-judul" class="text-xs font-medium text-gray-700">Judul Panduan / Tata Tertib *</label>
+						<label
+							for="sop-judul"
+							class="text-xs font-medium text-gray-700"
+							>Judul Panduan / Tata Tertib *</label
+						>
 						<input
 							id="sop-judul"
 							name="judul"
@@ -77,12 +86,18 @@
 							required
 							class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
 						/>
-						{#if form?.action === 'tambah' && form?.errors?.judul}
-							<p class="mt-0.5 text-xs text-red-600">{form.errors.judul}</p>
+						{#if form?.action === "tambah" && form?.errors?.judul}
+							<p class="mt-0.5 text-xs text-red-600">
+								{form.errors.judul}
+							</p>
 						{/if}
 					</div>
 					<div>
-						<label for="sop-kat" class="text-xs font-medium text-gray-700">Kategori</label>
+						<label
+							for="sop-kat"
+							class="text-xs font-medium text-gray-700"
+							>Kategori</label
+						>
 						<input
 							id="sop-kat"
 							name="kategori"
@@ -94,7 +109,11 @@
 				</div>
 
 				<div>
-					<label for="sop-urutan" class="text-xs font-medium text-gray-700">Nomor Urutan Tampilan (Angka)</label>
+					<label
+						for="sop-urutan"
+						class="text-xs font-medium text-gray-700"
+						>Nomor Urutan Tampilan (Angka)</label
+					>
 					<input
 						id="sop-urutan"
 						name="urutan"
@@ -105,7 +124,11 @@
 				</div>
 
 				<div>
-					<label for="sop-konten" class="text-xs font-medium text-gray-700">Isi Prosedur & Penjelasan Lengkap *</label>
+					<label
+						for="sop-konten"
+						class="text-xs font-medium text-gray-700"
+						>Isi Prosedur & Penjelasan Lengkap *</label
+					>
 					<textarea
 						id="sop-konten"
 						name="konten"
@@ -114,17 +137,21 @@
 						placeholder="Tuliskan butir-butir tata tertib atau langkah langkah SOP..."
 						class="mt-1 w-full rounded-xl border border-gray-300 px-3 py-2 text-sm focus:border-brand-500 focus:outline-none"
 					></textarea>
-					{#if form?.action === 'tambah' && form?.errors?.konten}
-						<p class="mt-0.5 text-xs text-red-600">{form.errors.konten}</p>
+					{#if form?.action === "tambah" && form?.errors?.konten}
+						<p class="mt-0.5 text-xs text-red-600">
+							{form.errors.konten}
+						</p>
 					{/if}
 				</div>
 
 				<button
 					type="submit"
-					disabled={loadingAction === 'tambah'}
+					disabled={loadingAction === "tambah"}
 					class="w-full rounded-xl bg-brand-600 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 disabled:opacity-50"
 				>
-					{loadingAction === 'tambah' ? 'Menyimpan...' : 'Simpan Dokumen SOP'}
+					{loadingAction === "tambah"
+						? "Menyimpan..."
+						: "Simpan Dokumen SOP"}
 				</button>
 			</form>
 		</section>
@@ -142,17 +169,25 @@
 
 	<!-- List SOP -->
 	{#if sopTersaring.length === 0}
-		<div class="rounded-2xl bg-white p-8 text-center text-gray-400 shadow-sm">
+		<div
+			class="rounded-2xl bg-white p-8 text-center text-gray-400 shadow-sm"
+		>
 			<p class="text-3xl">📜</p>
-			<p class="mt-2 text-sm font-medium text-gray-600">Belum ada dokumen SOP & tata tertib</p>
+			<p class="mt-2 text-sm font-medium text-gray-600">
+				Belum ada dokumen SOP & tata tertib
+			</p>
 		</div>
 	{:else}
 		<div class="space-y-3">
 			{#each sopTersaring as s (s.id)}
-				<article class="relative rounded-2xl bg-white p-4 shadow-sm border border-gray-100">
+				<article
+					class="relative rounded-2xl bg-emerald-50 p-4 shadow-sm border border-gray-100"
+				>
 					{#if editingId === s.id}
 						<!-- Form Edit Inline -->
-						<h3 class="text-sm font-semibold text-gray-900 mb-2">Edit Dokumen SOP</h3>
+						<h3 class="text-sm font-semibold text-gray-900 mb-2">
+							Edit Dokumen SOP
+						</h3>
 						<form
 							method="POST"
 							action="?/edit"
@@ -160,7 +195,7 @@
 								loadingAction = `edit-${s.id}`;
 								return async ({ result, update }) => {
 									loadingAction = null;
-									if (result.type === 'success') {
+									if (result.type === "success") {
 										editingId = null;
 									}
 									await update();
@@ -171,7 +206,11 @@
 							<input type="hidden" name="id" value={s.id} />
 							<div class="grid grid-cols-1 gap-2 sm:grid-cols-3">
 								<div class="sm:col-span-2">
-									<label for="edit-judul-s-{s.id}" class="text-xs font-medium text-gray-700">Judul</label>
+									<label
+										for="edit-judul-s-{s.id}"
+										class="text-xs font-medium text-gray-700"
+										>Judul</label
+									>
 									<input
 										id="edit-judul-s-{s.id}"
 										name="judul"
@@ -182,18 +221,26 @@
 									/>
 								</div>
 								<div>
-									<label for="edit-kat-s-{s.id}" class="text-xs font-medium text-gray-700">Kategori</label>
+									<label
+										for="edit-kat-s-{s.id}"
+										class="text-xs font-medium text-gray-700"
+										>Kategori</label
+									>
 									<input
 										id="edit-kat-s-{s.id}"
 										name="kategori"
 										type="text"
-										value={s.kategori ?? ''}
+										value={s.kategori ?? ""}
 										class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-1.5 text-sm"
 									/>
 								</div>
 							</div>
 							<div>
-								<label for="edit-urutan-s-{s.id}" class="text-xs font-medium text-gray-700">Urutan</label>
+								<label
+									for="edit-urutan-s-{s.id}"
+									class="text-xs font-medium text-gray-700"
+									>Urutan</label
+								>
 								<input
 									id="edit-urutan-s-{s.id}"
 									name="urutan"
@@ -203,14 +250,19 @@
 								/>
 							</div>
 							<div>
-								<label for="edit-konten-s-{s.id}" class="text-xs font-medium text-gray-700">Konten Prosedur</label>
+								<label
+									for="edit-konten-s-{s.id}"
+									class="text-xs font-medium text-gray-700"
+									>Konten Prosedur</label
+								>
 								<textarea
 									id="edit-konten-s-{s.id}"
 									name="konten"
 									rows="5"
 									required
 									class="mt-1 w-full rounded-lg border border-gray-300 px-3 py-1.5 text-sm"
-								>{s.konten}</textarea>
+									>{s.konten}</textarea
+								>
 							</div>
 							<div class="flex gap-2 pt-1">
 								<button
@@ -234,24 +286,32 @@
 							<button
 								type="button"
 								class="flex-1 text-left cursor-pointer focus:outline-none"
-								onclick={() => (expandedId = expandedId === s.id ? null : s.id)}
+								onclick={() =>
+									(expandedId =
+										expandedId === s.id ? null : s.id)}
 							>
 								<div class="flex items-center gap-1.5">
 									{#if s.kategori}
 										<span
-											class="inline-block rounded-md bg-indigo-50 px-2 py-0.5 text-[11px] font-medium text-indigo-700"
+											class="inline-block rounded-md bg-emerald-500 px-2 py-0.5 text-[11px] font-medium text-white"
 										>
-											📁 {s.kategori}
+											{s.kategori}
 										</span>
 									{/if}
 									{#if s.urutan !== null && s.urutan !== undefined}
-										<span class="text-[11px] text-gray-400">#{s.urutan}</span>
+										<span class="text-[11px] text-gray-400"
+											>#{s.urutan}</span
+										>
 									{/if}
 								</div>
-								<h3 class="mt-1 text-base font-semibold text-gray-900 flex items-center gap-1.5">
+								<h3
+									class="mt-1 text-base font-semibold text-gray-900 flex items-center gap-1.5"
+								>
 									<span>{s.judul}</span>
-									<span class="text-xs text-gray-400 font-normal">
-										{expandedId === s.id ? '▲' : '▼'}
+									<span
+										class="text-xs text-gray-400 font-normal"
+									>
+										{expandedId === s.id ? "▲" : "▼"}
 									</span>
 								</h3>
 							</button>
@@ -273,11 +333,20 @@
 										};
 									}}
 								>
-									<input type="hidden" name="id" value={s.id} />
+									<input
+										type="hidden"
+										name="id"
+										value={s.id}
+									/>
 									<button
 										type="submit"
 										onclick={(e) => {
-											if (!confirm(`Hapus SOP "${s.judul}"?`)) e.preventDefault();
+											if (
+												!confirm(
+													`Hapus SOP "${s.judul}"?`,
+												)
+											)
+												e.preventDefault();
 										}}
 										class="rounded-lg p-1.5 text-xs text-red-500 hover:bg-red-50 hover:text-red-700"
 										title="Hapus"
@@ -290,7 +359,7 @@
 
 						<!-- Preview ringkas atau Expand Full Content -->
 						<div
-							class="mt-2.5 rounded-xl bg-gray-50/80 p-3 text-xs leading-relaxed text-gray-700 whitespace-pre-line {expandedId ===
+							class="mt-2.5 rounded-xl bg-emerald-50 p-3 text-xs leading-relaxed text-gray-700 whitespace-pre-line {expandedId ===
 							s.id
 								? ''
 								: 'line-clamp-3'}"
@@ -299,10 +368,14 @@
 						</div>
 
 						<button
-							onclick={() => (expandedId = expandedId === s.id ? null : s.id)}
+							onclick={() =>
+								(expandedId =
+									expandedId === s.id ? null : s.id)}
 							class="mt-2 text-xs font-medium text-brand-600 hover:underline"
 						>
-							{expandedId === s.id ? 'Tutup Rincian ▲' : 'Baca Selengkapnya ▼'}
+							{expandedId === s.id
+								? "Tutup Rincian ▲"
+								: "Baca Selengkapnya ▼"}
 						</button>
 					{/if}
 				</article>
