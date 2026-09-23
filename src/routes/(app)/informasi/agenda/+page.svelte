@@ -268,7 +268,7 @@
 	<!-- List Agenda -->
 	{#if data.daftarAgenda.length === 0}
 		<div
-			class="rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm"
+			class="rounded-2xl border border-gray-100 bg-white p-8 text-center shadow-sm mt-10"
 		>
 			<div
 				class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gray-50 text-2xl"
